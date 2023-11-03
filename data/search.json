@@ -1,0 +1,52 @@
+[
+    {
+        "location_id": "15276336",
+        "name": "Jindalee Hotel",
+        "address_obj": {
+            "city": "Brisbane",
+            "state": "Queensland",
+            "country": "Australia",
+            "address_string": "Corner Sinnamon and Goggs Roads Jindalee, Brisbane, Queensland 4074 Australia"
+        }
+    },
+    {
+        "location_id": "3386248",
+        "name": "Pepe's Mexican Jindalee",
+        "address_obj": {
+            "city": "Brisbane",
+            "state": "Queensland",
+            "country": "Australia",
+            "address_string": "21 Goggs Rd Shop 5, Jindalee, Brisbane, Queensland 4074 Australia"
+        }
+    },
+    {
+        "location_id": "7304307",
+        "name": "Jindalee Villa",
+        "address_obj": {
+            "city": "Brisbane",
+            "state": "Queensland",
+            "country": "Australia",
+            "address_string": "168 Sinnamon Rd Shop 8, Brisbane, Queensland 4074 Australia"
+        }
+    },
+    {
+        "location_id": "4790948",
+        "name": "Pizza Peddlers & Ribs Jindalee",
+        "address_obj": {
+            "city": "Brisbane",
+            "state": "Queensland",
+            "country": "Australia",
+            "address_string": "721 Seventeen Mile Rocks Road Jindalee, Brisbane, Queensland 4073 Australia"
+        }
+    },
+    {
+        "location_id": "5109827",
+        "name": "Jindalee Place Seafood",
+        "address_obj": {
+            "city": "Brisbane",
+            "state": "Queensland",
+            "country": "Australia",
+            "address_string": "86 Curragundi Rd # 3, Brisbane, Queensland 4074 Australia"
+        }
+    }
+]

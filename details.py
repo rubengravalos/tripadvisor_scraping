@@ -1,4 +1,5 @@
-import tripadvisor_scraping.search as search, tripadvisor_scraping.reviews as reviews
+import search
+import reviews
 import os
 import csv
 from tqdm import tqdm
@@ -92,28 +93,28 @@ def scrape_data(start_at, stop_at, n_calls, search_data) :
             location_id = search_data[element].get("location_id")
             if location_id is not None:
                 details_json_data = search.location_details(search._key, location_id)
+                if details_json_data is not None :
+                  # Extrae los campos requeridos
+                  filtered_data = [{
+                      "location_id": details_json_data.get("location_id", ""),
+                      "name": details_json_data.get("name", ""),
+                      "web_url": details_json_data.get("web_url", ""),
+                      "street1": details_json_data.get("address_obj", {}).get("street1", ""),
+                      "street2": details_json_data.get("address_obj", {}).get("street2", ""),
+                      "city": details_json_data.get("address_obj", {}).get("city", ""),
+                      "state": details_json_data.get("address_obj", {}).get("state", ""),
+                      "country": details_json_data.get("address_obj", {}).get("country", ""),
+                      "postcode": details_json_data.get("address_obj", {}).get("postalcode", ""),
+                      "email": details_json_data.get("email", ""),
+                      "phone": details_json_data.get("phone", ""),
+                      "website": details_json_data.get("website", ""),
+                      "rating": details_json_data.get("rating", ""),
+                      "num_reviews": details_json_data.get("num_reviews", ""),
+                      "price_level": details_json_data.get("price_level", "")
+                  }]
 
-                # Extrae los campos requeridos
-                filtered_data = [{
-                    "location_id": details_json_data.get("location_id", ""),
-                    "name": details_json_data.get("name", ""),
-                    "web_url": details_json_data.get("web_url", ""),
-                    "street1": details_json_data.get("address_obj", {}).get("street1", ""),
-                    "street2": details_json_data.get("address_obj", {}).get("street2", ""),
-                    "city": details_json_data.get("address_obj", {}).get("city", ""),
-                    "state": details_json_data.get("address_obj", {}).get("state", ""),
-                    "country": details_json_data.get("address_obj", {}).get("country", ""),
-                    "postcode": details_json_data.get("address_obj", {}).get("postalcode", ""),
-                    "email": details_json_data.get("email", ""),
-                    "phone": details_json_data.get("phone", ""),
-                    "website": details_json_data.get("website", ""),
-                    "rating": details_json_data.get("rating", ""),
-                    "num_reviews": details_json_data.get("num_reviews", ""),
-                    "price_level": details_json_data.get("price_level", "")
-                }]
-
-                # Procesa y almacena los datos JSON
-                process_and_store_data(filtered_data, csv_file=csv_file)
+                  # Procesa y almacena los datos JSON
+                  process_and_store_data(filtered_data, csv_file=csv_file)
 
             else:
                 print("No se encontró 'location_id' en este elemento.")
@@ -169,5 +170,5 @@ if __name__ == "__main__":
     search.write_json(new_config, search.json_config)
 
     print("DONE!")
-    print("Number of hotels' details added: " + str(n_calls))
+    #print("Number of hotels' details added: " + str(n_calls))
     print("Total number of hotels in data/details.csv: " + str(n_search))

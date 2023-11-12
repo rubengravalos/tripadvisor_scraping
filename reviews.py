@@ -1,4 +1,4 @@
-import tripadvisor_scraping.search as search
+import search
 import csv
 import argparse
 import os
@@ -11,7 +11,7 @@ import sys
 parser = argparse.ArgumentParser(description='Description of your input arguments')
 parser.add_argument('--start', type=int, default=0, help='Element to start calling API with')
 parser.add_argument('--stop', type=int, default=0, help='Element to stop calling API with. Note that this element is not included to be called.')
-parser.add_argument('--overwrite', type=bool, default=False, help='Indicates whether overwrite the existing file reviews.csv or not.')
+parser.add_argument('--overwrite', type=str, default="YES", help='Indicates whether overwrite the existing file reviews.csv or not.')
 args = parser.parse_args()
 
 csv_details = 'data/details.csv'
@@ -86,12 +86,16 @@ def get_scraping_params (config_data, total_files) :
 
 def scrape_data(start_at, stop_at, n_calls, search_data) :
     results = []
+    scraped_ids = []
     with tqdm(total=n_calls, unit='hotel') as pbar:
 
         # Accede a la lista de elementos dentro de "data" y obtén el valor de "location_id"
         for element in range(start_at, stop_at):
+            if element not in range(len(search_data)) :
+              break
             location_id = search_data[element]['location_id']
-            if location_id is not None:
+            if location_id is not None and location_id not in scraped_ids :
+                scraped_ids.append(location_id)
                 reviews_json_data = search.location_reviews(search._key, location_id)
                 # Extract values of "id", "title", and "text" for each element in the "data" array
                 if reviews_json_data :
@@ -131,7 +135,7 @@ def update_reviews(matched_reviews, csv_file=csv_reviews) :
     # Check if the CSV file exists
     file_exists = os.path.exists(csv_file)
     existing_reviews = []
-    if file_exists and not args.overwrite :
+    if file_exists and args.overwrite == "NO" :
         existing_reviews = read_csv(csv_reviews)
         repeated_indexes = []        
         for ereview in existing_reviews :
@@ -150,7 +154,7 @@ def update_reviews(matched_reviews, csv_file=csv_reviews) :
             existing_reviews += [mreview]
     # Open the CSV file in writing
     with open(csv_file, "w", newline="") as csv_file:
-        headers = existing_reviews[0].keys()  # Get the column headers from the first dictionary
+
         writer = csv.DictWriter(csv_file, fieldnames=headers)
         # Write the headers to the CSV file
         writer.writeheader()
@@ -169,7 +173,11 @@ if __name__ == "__main__":
     config_data = search.read_json(search.json_config)
 
     """ Get the value of the parameters for the scraping """
-    total_files = len(search_data)
+    location_ids = []
+    for search_element in search_data :
+      location_ids.append(search_element['location_id'])
+    u_location_ids = list(dict.fromkeys(location_ids))
+    total_files = len(u_location_ids)
     start_at, stop_at, n_calls, new_config = get_scraping_params(config_data, total_files)
 
     """ Get the reviews containing the work "bugs" """

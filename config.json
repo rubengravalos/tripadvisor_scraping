@@ -1,21 +1,21 @@
 {
     "max_n_calls": 5000,
-    "done_calls": 5000,
+    "done_calls": 550,
     "first_call_at": "2023-10-17",
-    "last_call_at": "2023-11-03",
+    "last_call_at": "2023-11-10",
     "search": {
         "n_elements": 519,
-        "last_starting_at": 5,
-        "last_stopping_at": 9
+        "last_starting_at": 0,
+        "last_stopping_at": 519
     },
     "details": {
-        "n_elements": 5,
-        "last_starting_at": 4,
-        "last_stopping_at": 7
+        "n_elements": 1414,
+        "last_starting_at": 72,
+        "last_stopping_at": 75
     },
     "reviews": {
-        "n_elements": 3,
+        "n_elements": 2,
         "last_starting_at": 0,
-        "last_stopping_at": 0
+        "last_stopping_at": 5
     }
 }

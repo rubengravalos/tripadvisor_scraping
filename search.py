@@ -13,7 +13,7 @@ parser.add_argument('--stop', type=int, default=0, help='Element to stop calling
 parser.add_argument('--overwrite', type=str, default="YES", help='Indicates whether overwrite the existing file search.json or not.')
 args = parser.parse_args()
 
-_key = ""
+_key = "BC073290243D4F699FDBC9BA4204A72C"
 
 json_dataset = 'data/lga-scc-pairs.json'
 json_search = 'data/search.json'
@@ -68,7 +68,7 @@ def location_search (key, searchQuery, address):
             return response.json()
         else:
             # La solicitud no fue exitosa; muestra el código de estado
-            print(f"Error al obtener datos. Código de estado: {response.status_code}")
+            print(f"Couldn't obtainig data from Tripadvisor API. Status code: {response.status_code}")
     except requests.exceptions.RequestException as e:
         # Ocurrió un error en la solicitud
         print(f"Error en la solicitud a la API: {e}")
